@@ -11,7 +11,7 @@ This module implements the Account ID Mapper functionality while providing a sel
 Package | Version | Summary
 ----- | ------- | -------
 [social-payments-account-registry](social-payments-account-registry/) | 0.1.0 | Social Payments Account Registry: Core
-[spar-account-mapper-g2p-connect](spar-account-mapper-g2p-connect/) | 0.1.0 | SPAR: G2P Connect Account Mapper Backend
+[spar-mapper-g2p-connect](spar-mapper-g2p-connect/) | 0.1.0 | SPAR: G2P Connect Account Mapper Backend
 
 ## Licenses
 

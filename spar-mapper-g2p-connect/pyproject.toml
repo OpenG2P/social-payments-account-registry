@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "spar-account-mapper-g2p-connect"
+name = "spar-mapper-g2p-connect"
 version = "0.1.0"
 authors = [
   { name="OpenG2P", email="info@openg2p.org" },

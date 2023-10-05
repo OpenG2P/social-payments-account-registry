@@ -12,12 +12,20 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: 3.10
+        python-version: "3.10"
     - name: Install build dependencies
       run: pip install build
-    - name: Build distribution
-      run: python -m build
-    - name: Publish
+    - name: Build distribution SPAR
+      run: python -m build social-payments-account-registry
+    - name: Publish SPAR
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
+        packages-dir: social-payments-account-registry/dist
+        password: ${{ secrets.PYPI_API_TOKEN }}
+    - name: Build distribution SPAR G2P Connect Backend
+      run: python -m build spar-mapper-g2p-connect
+    - name: Publish SPAR G2P Connect Backend
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        packages-dir: spar-mapper-g2p-connect/dist
         password: ${{ secrets.PYPI_API_TOKEN }}
