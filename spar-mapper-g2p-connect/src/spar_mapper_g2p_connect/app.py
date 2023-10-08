@@ -9,5 +9,5 @@ from openg2p_fastapi_common.app import Initializer
 
 class Initializer(Initializer):
     def initialize(self, **kwargs):
-        super().initialize()
         # Initialize all Services, Controllers, any utils here.
+        pass
