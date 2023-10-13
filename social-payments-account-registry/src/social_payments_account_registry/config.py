@@ -19,5 +19,4 @@ class Settings(AuthSettings, Settings):
     """
     openapi_version: str = "0.1.0"
 
-    auth_enabled: bool = True
     auth_api_get_dfsp_level: ApiAuthSettings = ApiAuthSettings(enabled=True)

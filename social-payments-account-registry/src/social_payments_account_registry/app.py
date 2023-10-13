@@ -6,14 +6,13 @@ from .config import Settings
 
 _config = Settings.get_config()
 
-from openg2p_fastapi_auth.models.orm.login_provider import LoginProvider
 from openg2p_fastapi_common.app import Initializer
 
 from .controllers.dfsp_controller import DfspController
 from .controllers.self_service_controller import SelfServiceController
 from .models.orm.dfsp_levels import DfspLevel
 from .models.orm.fa_construct_strategy import FaConstructStrategy
-from .models.orm.provider import DfspProvider, IdProvider
+from .models.orm.provider import DfspProvider, IdProvider, LoginProvider
 
 
 class Initializer(Initializer):

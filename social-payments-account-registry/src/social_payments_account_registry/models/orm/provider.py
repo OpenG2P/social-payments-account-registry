@@ -1,36 +1,35 @@
-from datetime import datetime
 from typing import Optional
 
-from openg2p_fastapi_common.models import BaseORMModel
-from sqlalchemy import DateTime, ForeignKey, String
+from openg2p_fastapi_auth.models.orm.login_provider import (
+    LoginProvider as OriginalLoginProvider,
+)
+from openg2p_fastapi_common.models import BaseORMModelWithTimes
+from sqlalchemy import ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from .fa_construct_strategy import FaConstructStrategy
 
 
-class DfspProvider(BaseORMModel):
+class DfspProvider(BaseORMModelWithTimes):
     __tablename__ = "dfsp_providers"
 
-    id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String())
     description: Mapped[Optional[str]] = mapped_column(String())
     code: Mapped[str] = mapped_column(String(20))
     strategy_id: Mapped[int] = mapped_column(ForeignKey("fa_construct_strategy.id"))
     strategy: Mapped["FaConstructStrategy"] = relationship()
-    created_at: Mapped[datetime] = mapped_column(DateTime(), default=datetime.utcnow)
-    updated_at: Mapped[datetime] = mapped_column(DateTime(), default=datetime.utcnow)
 
 
-class IdProvider(BaseORMModel):
+class IdProvider(BaseORMModelWithTimes):
     __tablename__ = "id_providers"
 
-    id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String())
     description: Mapped[Optional[str]] = mapped_column(String())
     code: Mapped[str] = mapped_column(String(20))
     strategy_id: Mapped[int] = mapped_column(ForeignKey("fa_construct_strategy.id"))
     strategy: Mapped["FaConstructStrategy"] = relationship()
-    created_at: Mapped[datetime] = mapped_column(DateTime(), default=datetime.utcnow)
-    updated_at: Mapped[Optional[datetime]] = mapped_column(
-        DateTime(), default=datetime.utcnow
-    )
+
+
+class LoginProvider(OriginalLoginProvider):
+    id_provider_id: Mapped[int] = mapped_column(ForeignKey("login_provider.id"))
+    id_provider: Mapped[IdProvider] = relationship()
