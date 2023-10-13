@@ -18,6 +18,7 @@ classifiers = [
 ]
 dependencies=[
   "social-payments-account-registry",
+  "openg2p-common-g2pconnect-id-mapper",
 ]
 
 [project.urls]

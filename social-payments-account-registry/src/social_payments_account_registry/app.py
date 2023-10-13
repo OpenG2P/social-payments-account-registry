@@ -6,6 +6,7 @@ from .config import Settings
 
 _config = Settings.get_config()
 
+from openg2p_fastapi_auth.models.orm.login_provider import LoginProvider
 from openg2p_fastapi_common.app import Initializer
 
 from .controllers.dfsp_controller import DfspController
@@ -30,5 +31,6 @@ class Initializer(Initializer):
             await IdProvider.create_migrate()
             await FaConstructStrategy.create_migrate()
             await DfspLevel.create_migrate()
+            await LoginProvider.create_migrate()
 
         asyncio.run(migrate())

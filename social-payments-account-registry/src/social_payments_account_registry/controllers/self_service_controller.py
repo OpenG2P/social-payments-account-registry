@@ -11,7 +11,7 @@ class SelfServiceController(BaseController):
             "/getFaRequest",
             self.get_fa_request,
             # responses={200: {"model": }},
-            methods=["GET"],
+            methods=["POST"],
         )
         self.router.add_api_route(
             "/getFaRequestStatus",
@@ -20,16 +20,16 @@ class SelfServiceController(BaseController):
             methods=["GET"],
         )
         self.router.add_api_route(
-            "/updateFa",
+            "/updateFaRequest",
             self.update_fa_request,
             # responses={200: {"model": }},
             methods=["POST"],
         )
         self.router.add_api_route(
-            "/updateFa",
+            "/updateFaRequestStatus",
             self.update_fa_request_status,
             # responses={200: {"model": }},
-            methods=["POST"],
+            methods=["GET"],
         )
 
     async def get_fa_request(self):

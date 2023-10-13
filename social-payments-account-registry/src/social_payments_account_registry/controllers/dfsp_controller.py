@@ -1,4 +1,9 @@
+from typing import Annotated
+
+from fastapi import Depends
+from openg2p_fastapi_auth.dependencies import AuthCredentials, JwtBearerAuth
 from openg2p_fastapi_common.controller import BaseController
+from openg2p_fastapi_common.exception import BaseAppException
 
 from ..models.dfsp import (
     DfspLevelResponse,
@@ -27,10 +32,18 @@ class DfspController(BaseController):
             methods=["GET"],
         )
 
-    async def get_dfsp_level(self, id: int):
-        return DfspLevelResponse.model_validate(await DfspLevel.get_by_id(id))
+    async def get_dfsp_level(
+        self, id: int, auth: Annotated[AuthCredentials, Depends(JwtBearerAuth())]
+    ):
+        res = await DfspLevel.get_by_id(id)
+        if res:
+            return DfspLevelResponse.model_validate(res)
+        else:
+            raise BaseAppException("G2P-PAY-600", "DFSP Level with given id not found")
 
-    async def get_dfsp_level_values(self, levelId: int):
+    async def get_dfsp_level_values(
+        self, levelId: int, auth: Annotated[AuthCredentials, Depends(JwtBearerAuth())]
+    ):
         result = await DfspLevelValue.get_all_by_level_id(levelId)
         return DfspLevelValuesHttpResponse(
             levelValues=[DfspLevelValueResponse.model_validate(res) for res in result]
