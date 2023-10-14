@@ -1,0 +1,16 @@
+# Do NOT update manually; changes here will be overwritten by Copier
+_commit: 05d7119
+_src_path: ../openg2p-fastapi-template
+github_ci_docker_build: true
+github_ci_openapi_publish: true
+github_ci_precommit: true
+github_ci_pypi_publish: true
+github_ci_tests: true
+github_ci_tests_codecov: true
+module_name: social_payments_account_registry
+org_name: OpenG2P
+org_slug: OpenG2P
+package_name: social-payments-account-registry
+repo_name: Social Payments Account Registry
+repo_slug: social-payments-account-registry
+
