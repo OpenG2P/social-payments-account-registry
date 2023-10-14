@@ -43,9 +43,12 @@ class DfspController(BaseController):
             raise BaseAppException("G2P-PAY-600", "DFSP Level with given id not found")
 
     async def get_dfsp_level_values(
-        self, levelId: int, auth: Annotated[AuthCredentials, Depends(JwtBearerAuth())]
+        self,
+        levelId: int,
+        auth: Annotated[AuthCredentials, Depends(JwtBearerAuth())],
+        parentId: int = None,
     ):
-        result = await DfspLevelValue.get_all_by_level_id(levelId)
+        result = await DfspLevelValue.get_all_by_level_id(levelId, parent_id=parentId)
         return DfspLevelValuesHttpResponse(
             levelValues=[DfspLevelValueResponse.model_validate(res) for res in result]
         )

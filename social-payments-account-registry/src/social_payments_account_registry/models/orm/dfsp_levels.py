@@ -55,7 +55,7 @@ class DfspLevelValue(BaseORMModelWithTimes):
     dfsp_provider: Mapped[Optional["DfspProvider"]] = relationship()
 
     @classmethod
-    async def get_all_by_level_id(cls, level_id: int):
+    async def get_all_by_level_id(cls, level_id: int, parent_id: int = None):
         response = []
         async_session_maker = async_sessionmaker(dbengine.get())
         async with async_session_maker() as session:
@@ -64,7 +64,11 @@ class DfspLevelValue(BaseORMModelWithTimes):
                 .options(selectinload(cls.level))
                 .options(selectinload(cls.next_level))
                 .options(selectinload(cls.dfsp_provider))
-                .where(cls.level_id == level_id)
+                .where(
+                    and_(cls.level_id == level_id, cls.parent_id == parent_id)
+                    if parent_id
+                    else cls.level_id == level_id
+                )
                 .order_by(cls.id.asc())
             )
 
