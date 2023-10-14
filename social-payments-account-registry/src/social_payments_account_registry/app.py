@@ -13,12 +13,14 @@ from .controllers.self_service_controller import SelfServiceController
 from .models.orm.dfsp_levels import DfspLevel
 from .models.orm.fa_construct_strategy import FaConstructStrategy
 from .models.orm.provider import DfspProvider, IdProvider, LoginProvider
+from .services.construct_service import ConstructService
 
 
 class Initializer(Initializer):
     def initialize(self, **kwargs):
         super().initialize()
         # Initialize all Services, Controllers, any utils here.
+        ConstructService()
         DfspController().post_init()
         SelfServiceController().post_init()
 

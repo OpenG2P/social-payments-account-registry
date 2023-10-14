@@ -2,7 +2,7 @@ from typing import List, Optional
 
 from openg2p_fastapi_common.context import dbengine
 from openg2p_fastapi_common.models import BaseORMModelWithTimes
-from sqlalchemy import ForeignKey, Integer, String, select
+from sqlalchemy import ForeignKey, Integer, String, and_, select
 from sqlalchemy.ext.asyncio import async_sessionmaker
 from sqlalchemy.orm import Mapped, mapped_column, relationship, selectinload
 
@@ -37,17 +37,13 @@ class DfspLevelValue(BaseORMModelWithTimes):
 
     parent_id: Mapped[Optional[int]] = mapped_column(ForeignKey("dfsp_level_values.id"))
     parent: Mapped[Optional["DfspLevelValue"]] = relationship(
-        back_populates="childs", remote_side=id
+        back_populates="childs", remote_side="DfspLevelValue.id"
     )
     childs: Mapped[Optional[List["DfspLevelValue"]]] = relationship(
         back_populates="parent"
     )
 
-    level_id: Mapped[int] = mapped_column(
-        ForeignKey(
-            "dfsp_levels.id",
-        )
-    )
+    level_id: Mapped[int] = mapped_column(ForeignKey("dfsp_levels.id"))
     level: Mapped[DfspLevel] = relationship(foreign_keys=[level_id])
 
     next_level_id: Mapped[int] = mapped_column(ForeignKey("dfsp_levels.id"))
@@ -76,3 +72,21 @@ class DfspLevelValue(BaseORMModelWithTimes):
 
             response = list(result.scalars())
         return response
+
+    @classmethod
+    async def get_last_dfsp_provider_for_codes(cls, codes: List[str]):
+        result = None
+        async_session_maker = async_sessionmaker(dbengine.get())
+        async with async_session_maker() as session:
+            stmt = (
+                select(cls)
+                .join(cls.level)
+                .where(and_(cls.code.in_(codes), cls.dfsp_provider_id.isnot(None)))
+                .order_by(DfspLevel.level.desc())
+            )
+
+            res = (await session.execute(stmt)).scalar()
+
+            if res:
+                result = res
+        return result

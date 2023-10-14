@@ -1,7 +1,8 @@
 from typing import Annotated
 
 from fastapi import Depends
-from openg2p_fastapi_auth.dependencies import AuthCredentials, JwtBearerAuth
+from openg2p_fastapi_auth.dependencies import JwtBearerAuth
+from openg2p_fastapi_auth.models.credentials import AuthCredentials
 from openg2p_fastapi_common.controller import BaseController
 from openg2p_fastapi_common.exception import BaseAppException
 

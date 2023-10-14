@@ -20,3 +20,7 @@ class Settings(AuthSettings, Settings):
     openapi_version: str = "0.1.0"
 
     auth_api_get_dfsp_level: ApiAuthSettings = ApiAuthSettings(enabled=True)
+    auth_api_get_fa_request: ApiAuthSettings = ApiAuthSettings(enabled=True)
+    auth_api_update_fa_request: ApiAuthSettings = ApiAuthSettings(enabled=True)
+    auth_get_fa_request_status: ApiAuthSettings = ApiAuthSettings(enabled=True)
+    auth_update_fa_request_status: ApiAuthSettings = ApiAuthSettings(enabled=True)

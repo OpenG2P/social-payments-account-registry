@@ -31,5 +31,5 @@ class IdProvider(BaseORMModelWithTimes):
 
 
 class LoginProvider(OriginalLoginProvider):
-    id_provider_id: Mapped[int] = mapped_column(ForeignKey("login_provider.id"))
-    id_provider: Mapped[IdProvider] = relationship()
+    id_provider_id: Mapped[Optional[int]] = mapped_column(ForeignKey("id_providers.id"))
+    id_provider: Mapped[Optional[IdProvider]] = relationship()
