@@ -22,6 +22,7 @@ RUN python3 -m pip install \
   git+https://github.com/openg2p/openg2p-fastapi-common.git@develop\#egg=openg2p-fastapi-common\&subdirectory=openg2p-fastapi-common \
   git+https://github.com/openg2p/openg2p-fastapi-common.git@develop\#egg=openg2p-fastapi-auth\&subdirectory=openg2p-fastapi-auth \
   ./src/social-payments-account-registry \
-  ./src/spar-mapper-g2p-connect
+  ./src/spar-mapper-g2p-connect \
+  ./src/spar-mojaloop-als-oracle
 CMD python3 main.py migrate; \
   python3 main.py run
