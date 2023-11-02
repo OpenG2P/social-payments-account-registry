@@ -35,7 +35,7 @@ class SelfServiceController(BaseController):
             methods=["GET"],
         )
         self.router.add_api_route(
-            "/updateFaRequest/",
+            "/updateFaRequest",
             self.update_fa_request,
             responses={200: {"model": UpdateTxnStatus}},
             methods=["POST"],
