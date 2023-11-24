@@ -19,6 +19,8 @@ class Settings(AuthSettings, Settings):
     """
     openapi_version: str = "0.1.0"
 
+    db_dbname: str = "spardb"
+
     auth_api_get_dfsp_level: ApiAuthSettings = ApiAuthSettings(enabled=True)
     auth_api_get_fa_request: ApiAuthSettings = ApiAuthSettings(enabled=True)
     auth_api_update_fa_request: ApiAuthSettings = ApiAuthSettings(enabled=True)
