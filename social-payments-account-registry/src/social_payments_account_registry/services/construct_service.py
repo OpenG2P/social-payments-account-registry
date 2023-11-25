@@ -1,5 +1,6 @@
-from typing import List
+from typing import Dict, List
 
+import parse
 from openg2p_fastapi_common.service import BaseService
 
 from ..models.key_value import KeyValuePair
@@ -15,6 +16,12 @@ class ConstructService(BaseService):
         return strategy.format(
             **{key_value.key: key_value.value for key_value in values}
         )
+
+    def deconstruct(self, value: str, strategy: str) -> Dict:
+        parse_res = parse.parse(strategy, value)
+        if parse_res:
+            return parse_res.named
+        return None
 
     async def id_construct(self, id_values: List[KeyValuePair], id_provider_id: int):
         id_provider: IdProvider = await IdProvider.get_by_id(id_provider_id)
