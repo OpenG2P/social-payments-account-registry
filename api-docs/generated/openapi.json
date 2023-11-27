@@ -1,0 +1,2453 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Social Payments Account Registry",
+    "description": "\n    This module gives selfservice portal and additional functionalities to an ID Account Mapper, like G2P Connect.\n\n    ***********************************\n    Further details goes here\n    ***********************************\n    ",
+    "contact": {
+      "url": "https://www.openg2p.org/",
+      "email": "info@openg2p.org"
+    },
+    "license": {
+      "name": "Mozilla Public License 2.0",
+      "url": "https://www.mozilla.org/en-US/MPL/2.0/"
+    },
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/dfsp/getLevel/{id}": {
+      "get": {
+        "tags": [
+          "dfsp"
+        ],
+        "summary": "Get Dfsp Level",
+        "operationId": "get_dfsp_level_dfsp_getLevel__id__get",
+        "security": [
+          {
+            "JwtBearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DfspLevelResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/dfsp/getLevelValues/{levelId}": {
+      "get": {
+        "tags": [
+          "dfsp"
+        ],
+        "summary": "Get Dfsp Level Values",
+        "operationId": "get_dfsp_level_values_dfsp_getLevelValues__levelId__get",
+        "security": [
+          {
+            "JwtBearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "levelId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Levelid"
+            }
+          },
+          {
+            "name": "parentId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "title": "Parentid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DfspLevelValuesHttpResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/selfservice/getFaRequest": {
+      "post": {
+        "tags": [
+          "selfservice"
+        ],
+        "summary": "Get Fa Request",
+        "operationId": "get_fa_request_selfservice_getFaRequest_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetTxnStatus"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JwtBearerAuth": []
+          }
+        ]
+      }
+    },
+    "/selfservice/getFaRequestStatus/{txn_id}": {
+      "get": {
+        "tags": [
+          "selfservice"
+        ],
+        "summary": "Get Fa Request Status",
+        "operationId": "get_fa_request_status_selfservice_getFaRequestStatus__txn_id__get",
+        "security": [
+          {
+            "JwtBearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "txn_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Txn Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetTxnStatus"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/selfservice/updateFaRequest": {
+      "post": {
+        "tags": [
+          "selfservice"
+        ],
+        "summary": "Update Fa Request",
+        "operationId": "update_fa_request_selfservice_updateFaRequest_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FaUpdateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateTxnStatus"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JwtBearerAuth": []
+          }
+        ]
+      }
+    },
+    "/selfservice/updateFaRequestStatus/{txn_id}": {
+      "get": {
+        "tags": [
+          "selfservice"
+        ],
+        "summary": "Update Fa Request Status",
+        "operationId": "update_fa_request_status_selfservice_updateFaRequestStatus__txn_id__get",
+        "security": [
+          {
+            "JwtBearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "txn_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Txn Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateTxnStatus"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/profile": {
+      "get": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Get Profile",
+        "operationId": "get_profile_auth_profile_get",
+        "security": [
+          {
+            "JwtBearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "online",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": true,
+              "title": "Online"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasicProfile"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Logout",
+        "operationId": "logout_auth_logout_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/getLoginProviders": {
+      "get": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Get Login Providers",
+        "operationId": "get_login_providers_auth_getLoginProviders_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginProviderHttpResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/getLoginProviderRedirect/{id}": {
+      "get": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Get Login Provider Redirect",
+        "operationId": "get_login_provider_redirect_auth_getLoginProviderRedirect__id__get",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Id"
+            }
+          },
+          {
+            "name": "redirect_uri",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "/",
+              "title": "Redirect Uri"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/oauth2/callback": {
+      "get": {
+        "tags": [
+          "oauth"
+        ],
+        "summary": "Oauth Callback",
+        "operationId": "oauth_callback_oauth2_callback_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/callback/mapper/on-link": {
+      "post": {
+        "tags": [
+          "callback"
+        ],
+        "summary": "Mapper On Link",
+        "operationId": "mapper_on_link_internal_callback_mapper_on_link_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LinkCallbackHttpRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResponseMessage"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/callback/mapper/on-update": {
+      "post": {
+        "tags": [
+          "callback"
+        ],
+        "summary": "Mapper On Update",
+        "operationId": "mapper_on_update_internal_callback_mapper_on_update_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCallbackHttpRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResponseMessage"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/callback/mapper/on-resolve": {
+      "post": {
+        "tags": [
+          "callback"
+        ],
+        "summary": "Mapper On Resolve",
+        "operationId": "mapper_on_resolve_internal_callback_mapper_on_resolve_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResolveCallbackHttpRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResponseMessage"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/mojaloop/participants/{type}/{id}": {
+      "get": {
+        "tags": [
+          "mojaloop-als-oracle"
+        ],
+        "summary": "Get Participants",
+        "operationId": "get_participants_internal_mojaloop_participants__type___id__get",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Type"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParticipantsTypeIDGetResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ping": {
+      "get": {
+        "tags": [
+          "ping"
+        ],
+        "summary": "Get Ping",
+        "operationId": "get_ping_ping_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AccountProviderInfo": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "subcode": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Subcode",
+            "default": ""
+          },
+          "additional_info": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Additional Info",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "code"
+        ],
+        "title": "AccountProviderInfo"
+      },
+      "Ack": {
+        "type": "string",
+        "enum": [
+          "ACK",
+          "NACK",
+          "ERR"
+        ],
+        "title": "Ack"
+      },
+      "AdditionalInfo": {
+        "properties": {
+          "key": {
+            "type": "string",
+            "title": "Key"
+          },
+          "value": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "object"
+              }
+            ],
+            "title": "Value"
+          }
+        },
+        "type": "object",
+        "required": [
+          "key",
+          "value"
+        ],
+        "title": "AdditionalInfo"
+      },
+      "BasicProfile": {
+        "properties": {
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "sub": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sub"
+          },
+          "iss": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Iss"
+          },
+          "exp": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Exp"
+          },
+          "picture": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Picture"
+          },
+          "profile": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Profile"
+          },
+          "email": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Email"
+          },
+          "gender": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Gender"
+          },
+          "birthdate": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Birthdate"
+          },
+          "address": {
+            "anyOf": [
+              {
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Address"
+          }
+        },
+        "additionalProperties": true,
+        "type": "object",
+        "title": "BasicProfile"
+      },
+      "CommonResponse": {
+        "properties": {
+          "ack_status": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Ack"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Timestamp"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ErrorResponse"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "correlation_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Correlation Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "timestamp"
+        ],
+        "title": "CommonResponse"
+      },
+      "CommonResponseMessage": {
+        "properties": {
+          "message": {
+            "$ref": "#/components/schemas/CommonResponse"
+          }
+        },
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "title": "CommonResponseMessage"
+      },
+      "DfspLevelResponse": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "level": {
+            "type": "integer",
+            "title": "Level"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "code",
+          "level"
+        ],
+        "title": "DfspLevelResponse"
+      },
+      "DfspLevelValueResponse": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "level": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DfspLevelResponse"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "next_level": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DfspLevelResponse"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "code"
+        ],
+        "title": "DfspLevelValueResponse"
+      },
+      "DfspLevelValuesHttpResponse": {
+        "properties": {
+          "levelValues": {
+            "items": {
+              "$ref": "#/components/schemas/DfspLevelValueResponse"
+            },
+            "type": "array",
+            "title": "Levelvalues"
+          }
+        },
+        "type": "object",
+        "required": [
+          "levelValues"
+        ],
+        "title": "DfspLevelValuesHttpResponse"
+      },
+      "ErrorListResponse": {
+        "properties": {
+          "errors": {
+            "items": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            },
+            "type": "array",
+            "title": "Errors"
+          }
+        },
+        "type": "object",
+        "required": [
+          "errors"
+        ],
+        "title": "ErrorListResponse"
+      },
+      "ErrorResponse": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "Code",
+            "default": ""
+          },
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "title": "ErrorResponse"
+      },
+      "FaUpdateRequest": {
+        "properties": {
+          "level_values": {
+            "items": {
+              "$ref": "#/components/schemas/KeyValuePair"
+            },
+            "type": "array",
+            "title": "Level Values"
+          }
+        },
+        "type": "object",
+        "required": [
+          "level_values"
+        ],
+        "title": "FaUpdateRequest"
+      },
+      "GetTxnStatus": {
+        "properties": {
+          "txn_id": {
+            "type": "string",
+            "title": "Txn Id"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "fa": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fa"
+          }
+        },
+        "type": "object",
+        "required": [
+          "txn_id",
+          "status"
+        ],
+        "title": "GetTxnStatus"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "KeyValuePair": {
+        "properties": {
+          "key": {
+            "type": "string",
+            "title": "Key"
+          },
+          "value": {
+            "type": "string",
+            "title": "Value"
+          }
+        },
+        "type": "object",
+        "required": [
+          "key",
+          "value"
+        ],
+        "title": "KeyValuePair"
+      },
+      "LinkCallbackHttpRequest": {
+        "properties": {
+          "signature": {
+            "type": "string",
+            "title": "Signature"
+          },
+          "header": {
+            "$ref": "#/components/schemas/MsgCallbackHeader"
+          },
+          "message": {
+            "$ref": "#/components/schemas/LinkCallbackRequest"
+          }
+        },
+        "type": "object",
+        "required": [
+          "signature",
+          "header",
+          "message"
+        ],
+        "title": "LinkCallbackHttpRequest"
+      },
+      "LinkCallbackRequest": {
+        "properties": {
+          "transaction_id": {
+            "type": "string",
+            "title": "Transaction Id"
+          },
+          "correlation_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Correlation Id",
+            "default": ""
+          },
+          "link_response": {
+            "items": {
+              "$ref": "#/components/schemas/SingleLinkCallbackRequest"
+            },
+            "type": "array",
+            "title": "Link Response"
+          }
+        },
+        "type": "object",
+        "required": [
+          "transaction_id",
+          "link_response"
+        ],
+        "title": "LinkCallbackRequest"
+      },
+      "LinkRequestStatusReasonCode": {
+        "type": "string",
+        "enum": [
+          "rjct.reference_id.invalid",
+          "rjct.reference_id.duplicate",
+          "rjct.timestamp.invalid",
+          "rjct.id.invalid",
+          "rjct.fa.invalid",
+          "rjct.name.invalid",
+          "rjct.mobile_number.invalid",
+          "rjct.unknown.retry",
+          "rjct.other.error"
+        ],
+        "title": "LinkRequestStatusReasonCode"
+      },
+      "LoginProviderHttpResponse": {
+        "properties": {
+          "loginProviders": {
+            "items": {
+              "$ref": "#/components/schemas/LoginProviderResponse"
+            },
+            "type": "array",
+            "title": "Loginproviders"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loginProviders"
+        ],
+        "title": "LoginProviderHttpResponse"
+      },
+      "LoginProviderResponse": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "type": {
+            "$ref": "#/components/schemas/LoginProviderTypes"
+          },
+          "displayName": {
+            "type": "string",
+            "title": "Displayname"
+          },
+          "displayIconUrl": {
+            "type": "string",
+            "title": "Displayiconurl"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "type",
+          "displayName",
+          "displayIconUrl"
+        ],
+        "title": "LoginProviderResponse"
+      },
+      "LoginProviderTypes": {
+        "const": "oauth2_auth_code",
+        "title": "LoginProviderTypes"
+      },
+      "MsgCallbackHeader": {
+        "properties": {
+          "version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Version",
+            "default": "1.0.0"
+          },
+          "message_id": {
+            "type": "string",
+            "title": "Message Id"
+          },
+          "message_ts": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Message Ts"
+          },
+          "action": {
+            "type": "string",
+            "title": "Action"
+          },
+          "status": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RequestStatusEnum"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "status_reason_code": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/MsgHeaderStatusReasonCodeEnum"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "status_reason_message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Status Reason Message"
+          },
+          "total_count": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Total Count",
+            "default": -1
+          },
+          "completed_count": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Completed Count",
+            "default": -1
+          },
+          "sender_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sender Id"
+          },
+          "receiver_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Receiver Id"
+          },
+          "is_encrypted": {
+            "type": "boolean",
+            "title": "Is Encrypted"
+          }
+        },
+        "type": "object",
+        "required": [
+          "message_id",
+          "message_ts",
+          "action",
+          "is_encrypted"
+        ],
+        "title": "MsgCallbackHeader"
+      },
+      "MsgHeaderStatusReasonCodeEnum": {
+        "type": "string",
+        "enum": [
+          "rjct.version.invalid",
+          "rjct.message_id.duplicate",
+          "rjct.message_ts.invalid",
+          "rjct.action.invalid",
+          "rjct.action.not_supported",
+          "rjct.total_count.invalid",
+          "rjct.total_count.limit_exceeded",
+          "rjct.errors.too_many"
+        ],
+        "title": "MsgHeaderStatusReasonCodeEnum"
+      },
+      "ParticipantsTypeIDGetResponse": {
+        "properties": {
+          "partyList": {
+            "items": {
+              "$ref": "#/components/schemas/PartyTypeIdInfo"
+            },
+            "type": "array",
+            "title": "Partylist"
+          }
+        },
+        "type": "object",
+        "required": [
+          "partyList"
+        ],
+        "title": "ParticipantsTypeIDGetResponse"
+      },
+      "PartyTypeIdInfo": {
+        "properties": {
+          "fspId": {
+            "type": "string",
+            "title": "Fspid"
+          }
+        },
+        "type": "object",
+        "required": [
+          "fspId"
+        ],
+        "title": "PartyTypeIdInfo"
+      },
+      "RequestStatusEnum": {
+        "type": "string",
+        "enum": [
+          "rcvd",
+          "pdng",
+          "succ",
+          "rjct"
+        ],
+        "title": "RequestStatusEnum"
+      },
+      "ResolveCallbackHttpRequest": {
+        "properties": {
+          "signature": {
+            "type": "string",
+            "title": "Signature"
+          },
+          "header": {
+            "$ref": "#/components/schemas/MsgCallbackHeader"
+          },
+          "message": {
+            "$ref": "#/components/schemas/ResolveCallbackRequest"
+          }
+        },
+        "type": "object",
+        "required": [
+          "signature",
+          "header",
+          "message"
+        ],
+        "title": "ResolveCallbackHttpRequest"
+      },
+      "ResolveCallbackRequest": {
+        "properties": {
+          "transaction_id": {
+            "type": "string",
+            "title": "Transaction Id"
+          },
+          "correlation_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Correlation Id",
+            "default": ""
+          },
+          "resolve_response": {
+            "items": {
+              "$ref": "#/components/schemas/SingleResolveCallbackRequest"
+            },
+            "type": "array",
+            "title": "Resolve Response"
+          }
+        },
+        "type": "object",
+        "required": [
+          "transaction_id",
+          "resolve_response"
+        ],
+        "title": "ResolveCallbackRequest"
+      },
+      "ResolveRequestStatusReasonCode": {
+        "type": "string",
+        "enum": [
+          "rjct.reference_id.invalid",
+          "rjct.reference_id.duplicate",
+          "rjct.timestamp.invalid",
+          "rjct.id.invalid",
+          "rjct.fa.invalid",
+          "rjct.resolve_type.not_supported",
+          "succ.fa.active",
+          "succ.fa.inactive",
+          "succ.fa.not_found",
+          "succ.fa.not_linked_to_id",
+          "succ.id.active",
+          "succ.id.inactive",
+          "succ.id.not_found"
+        ],
+        "title": "ResolveRequestStatusReasonCode"
+      },
+      "SingleLinkCallbackRequest": {
+        "properties": {
+          "reference_id": {
+            "type": "string",
+            "title": "Reference Id"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Timestamp"
+          },
+          "fa": {
+            "type": "string",
+            "title": "Fa"
+          },
+          "status": {
+            "$ref": "#/components/schemas/RequestStatusEnum"
+          },
+          "status_reason_code": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/LinkRequestStatusReasonCode"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "status_reason_message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Status Reason Message",
+            "default": ""
+          },
+          "additional_info": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AdditionalInfo"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "locale": {
+            "type": "string",
+            "title": "Locale",
+            "default": "eng"
+          }
+        },
+        "type": "object",
+        "required": [
+          "reference_id",
+          "timestamp",
+          "fa",
+          "status"
+        ],
+        "title": "SingleLinkCallbackRequest"
+      },
+      "SingleResolveCallbackRequest": {
+        "properties": {
+          "reference_id": {
+            "type": "string",
+            "title": "Reference Id"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Timestamp"
+          },
+          "fa": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fa",
+            "default": ""
+          },
+          "id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id",
+            "default": ""
+          },
+          "account_provider_info": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AccountProviderInfo"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "status": {
+            "$ref": "#/components/schemas/RequestStatusEnum"
+          },
+          "status_reason_code": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ResolveRequestStatusReasonCode"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "status_reason_message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Status Reason Message",
+            "default": ""
+          },
+          "additional_info": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AdditionalInfo"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "locale": {
+            "type": "string",
+            "title": "Locale",
+            "default": "eng"
+          }
+        },
+        "type": "object",
+        "required": [
+          "reference_id",
+          "timestamp",
+          "status"
+        ],
+        "title": "SingleResolveCallbackRequest"
+      },
+      "SingleUpdateCallbackRequest": {
+        "properties": {
+          "reference_id": {
+            "type": "string",
+            "title": "Reference Id"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Timestamp"
+          },
+          "id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id",
+            "default": ""
+          },
+          "status": {
+            "$ref": "#/components/schemas/RequestStatusEnum"
+          },
+          "status_reason_code": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/UpdateRequestStatusReasonCode"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "status_reason_message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Status Reason Message",
+            "default": ""
+          },
+          "additional_info": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AdditionalInfo"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "locale": {
+            "type": "string",
+            "title": "Locale",
+            "default": "eng"
+          }
+        },
+        "type": "object",
+        "required": [
+          "reference_id",
+          "timestamp",
+          "status"
+        ],
+        "title": "SingleUpdateCallbackRequest"
+      },
+      "UpdateCallbackHttpRequest": {
+        "properties": {
+          "signature": {
+            "type": "string",
+            "title": "Signature"
+          },
+          "header": {
+            "$ref": "#/components/schemas/MsgCallbackHeader"
+          },
+          "message": {
+            "$ref": "#/components/schemas/UpdateCallbackRequest"
+          }
+        },
+        "type": "object",
+        "required": [
+          "signature",
+          "header",
+          "message"
+        ],
+        "title": "UpdateCallbackHttpRequest"
+      },
+      "UpdateCallbackRequest": {
+        "properties": {
+          "transaction_id": {
+            "type": "string",
+            "title": "Transaction Id"
+          },
+          "correlation_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Correlation Id",
+            "default": ""
+          },
+          "update_response": {
+            "items": {
+              "$ref": "#/components/schemas/SingleUpdateCallbackRequest"
+            },
+            "type": "array",
+            "title": "Update Response"
+          }
+        },
+        "type": "object",
+        "required": [
+          "transaction_id",
+          "update_response"
+        ],
+        "title": "UpdateCallbackRequest"
+      },
+      "UpdateRequestStatusReasonCode": {
+        "type": "string",
+        "enum": [
+          "rjct.reference_id.invalid",
+          "rjct.reference_id.duplicate",
+          "rjct.timestamp.invalid",
+          "rjct.beneficiary_name.invalid"
+        ],
+        "title": "UpdateRequestStatusReasonCode"
+      },
+      "UpdateTxnStatus": {
+        "properties": {
+          "txn_id": {
+            "type": "string",
+            "title": "Txn Id"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          }
+        },
+        "type": "object",
+        "required": [
+          "txn_id",
+          "status"
+        ],
+        "title": "UpdateTxnStatus"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    },
+    "securitySchemes": {
+      "JwtBearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}
