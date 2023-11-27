@@ -17,7 +17,7 @@ classifiers = [
   "Operating System :: OS Independent",
 ]
 dependencies=[
-  "openg2p-fastapi-common",
+  "social-payments-account-registry",
   "openg2p-common-g2pconnect-id-mapper",
 ]
 
