@@ -29,3 +29,10 @@ jobs:
       with:
         packages-dir: spar-mapper-g2p-connect/dist
         password: ${{ secrets.PYPI_API_TOKEN }}
+    - name: Build distribution SPAR Mojaloop ALS Oracle
+      run: python -m build spar-mojaloop-als-oracle
+    - name: Publish SPAR Mojaloop ALS Oracle
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        packages-dir: spar-mojaloop-als-oracle/dist
+        password: ${{ secrets.PYPI_API_TOKEN }}

@@ -9,3 +9,9 @@ class Settings(G2PConnectMapperSettings, Settings):
     model_config = SettingsConfigDict(
         env_prefix="spar_g2p_connect_", env_file=".env", extra="allow"
     )
+
+    callback_api_common_prefix: str = "/internal/callback"
+
+    mapper_resolve_sender_url: str = "http://localhost:8000/internal/callback/mapper"
+    mapper_link_sender_url: str = "http://localhost:8000/internal/callback/mapper"
+    mapper_update_sender_url: str = "http://localhost:8000/internal/callback/mapper"
