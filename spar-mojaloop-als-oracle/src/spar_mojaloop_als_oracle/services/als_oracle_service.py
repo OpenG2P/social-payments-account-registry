@@ -42,12 +42,14 @@ class MojaloopOracleService(BaseService):
         # seaching through the FAs using the resolve API.
         # This is possible in Sunbird's G2P ID Mapper because of a limitation
         try:
-            res = await self.mapper_resolve_service.resolve_request_sync(
+            res = await self.mapper_resolve_service.resolve_request(
                 [
                     MapperValue(
                         fa=f"{fa_prefix}{id}",
                     ),
                 ],
+                loop_sleep=0,
+                max_retries=100,
             )
             res = list(res.refs.values())[0]
             if res.status == RequestStatusEnum.succ:

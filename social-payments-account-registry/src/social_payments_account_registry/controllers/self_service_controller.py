@@ -76,6 +76,7 @@ class SelfServiceController(BaseController):
         self,
         fa_update_request: FaUpdateRequest,
         auth: Annotated[AuthCredentials, Depends(JwtBearerAuth())],
+        link: bool = False,
     ):
         # TODO: Perform Validations on input
         login_provider: LoginProvider = await LoginProvider.get_login_provider_from_iss(
@@ -107,6 +108,7 @@ class SelfServiceController(BaseController):
             fa_update_request.level_values,
             login_provider.id_provider_id,
             dfsp_level_value.dfsp_provider_id,
+            link=link,
         )
 
     async def get_fa_request_status(
@@ -116,7 +118,10 @@ class SelfServiceController(BaseController):
         return await self.id_mapper_service.get_fa_request_status(txn_id)
 
     async def update_fa_request_status(
-        self, txn_id: str, auth: Annotated[AuthCredentials, Depends(JwtBearerAuth())]
+        self,
+        txn_id: str,
+        auth: Annotated[AuthCredentials, Depends(JwtBearerAuth())],
+        link: bool = False,
     ):
         # TODO: Perform validation for user vs txn
-        return await self.id_mapper_service.update_fa_request_status(txn_id)
+        return await self.id_mapper_service.update_fa_request_status(txn_id, link=link)
