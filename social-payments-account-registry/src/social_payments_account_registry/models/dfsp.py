@@ -10,6 +10,8 @@ class DfspLevelResponse(BaseModel):
     name: str
     code: str
     level: int
+    next_level: Optional["DfspLevelResponse"] = None
+    validation_regex: Optional[str] = None
 
 
 class DfspLevelValueResponse(BaseModel):
@@ -26,3 +28,9 @@ class DfspLevelValuesHttpResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
     levelValues: List[DfspLevelValueResponse]
+
+
+class DfspLevelHttpResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    levels: List[DfspLevelResponse]

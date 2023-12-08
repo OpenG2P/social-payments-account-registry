@@ -15,12 +15,12 @@ class IdMapperService(BaseService):
     async def get_fa_request(self, id: str) -> GetTxnStatus:
         raise NotImplementedError()
 
-    async def get_fa_request_status(self, txn_id: str) -> UpdateTxnStatus:
+    async def get_fa_request_status(self, txn_id: str) -> GetTxnStatus:
         raise NotImplementedError()
 
     async def update_fa_request(
         self, id: str, fa: str, link: bool = False
-    ) -> GetTxnStatus:
+    ) -> UpdateTxnStatus:
         raise NotImplementedError()
 
     async def update_fa_request_status(

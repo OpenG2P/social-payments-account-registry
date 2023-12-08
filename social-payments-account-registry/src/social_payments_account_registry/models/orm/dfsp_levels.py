@@ -16,12 +16,26 @@ class DfspLevel(BaseORMModelWithTimes):
     code: Mapped[str] = mapped_column(String(20))
     level: Mapped[int] = mapped_column(Integer())
 
+    next_level_id: Mapped[Optional[int]] = mapped_column(ForeignKey("dfsp_levels.id"))
+    next_level: Mapped[Optional["DfspLevel"]] = relationship(
+        foreign_keys=[next_level_id]
+    )
+
+    validation_regex: Mapped[Optional[str]] = mapped_column(String())
+
     @classmethod
-    async def get_all_by_level(cls, level: int):
+    async def get_all_by_query(cls, **kwargs):
+        if "active" not in kwargs:
+            kwargs["active"] = True
         response = []
         async_session_maker = async_sessionmaker(dbengine.get())
         async with async_session_maker() as session:
-            stmt = select(cls).where(cls.level == level).order_by(cls.id.asc())
+            stmt = select(cls).options(selectinload(cls.next_level))
+            for key, value in kwargs.items():
+                if value is not None:
+                    stmt = stmt.where(getattr(cls, key) == value)
+
+            stmt = stmt.order_by(cls.id.asc())
 
             result = await session.execute(stmt)
 
@@ -36,12 +50,6 @@ class DfspLevelValue(BaseORMModelWithTimes):
     code: Mapped[str] = mapped_column(String(20))
 
     parent_id: Mapped[Optional[int]] = mapped_column(ForeignKey("dfsp_level_values.id"))
-    parent: Mapped[Optional["DfspLevelValue"]] = relationship(
-        back_populates="childs", remote_side="DfspLevelValue.id"
-    )
-    childs: Mapped[Optional[List["DfspLevelValue"]]] = relationship(
-        back_populates="parent"
-    )
 
     level_id: Mapped[int] = mapped_column(ForeignKey("dfsp_levels.id"))
     level: Mapped[DfspLevel] = relationship(foreign_keys=[level_id])
@@ -55,7 +63,9 @@ class DfspLevelValue(BaseORMModelWithTimes):
     dfsp_provider: Mapped[Optional["DfspProvider"]] = relationship()
 
     @classmethod
-    async def get_all_by_level_id(cls, level_id: int, parent_id: int = None):
+    async def get_all_by_query(cls, **kwargs):
+        if "active" not in kwargs:
+            kwargs["active"] = True
         response = []
         async_session_maker = async_sessionmaker(dbengine.get())
         async with async_session_maker() as session:
@@ -64,13 +74,12 @@ class DfspLevelValue(BaseORMModelWithTimes):
                 .options(selectinload(cls.level))
                 .options(selectinload(cls.next_level))
                 .options(selectinload(cls.dfsp_provider))
-                .where(
-                    and_(cls.level_id == level_id, cls.parent_id == parent_id)
-                    if parent_id
-                    else cls.level_id == level_id
-                )
-                .order_by(cls.id.asc())
             )
+            for key, value in kwargs.items():
+                if value is not None:
+                    stmt = stmt.where(getattr(cls, key) == value)
+
+            stmt = stmt.order_by(cls.id.asc())
 
             result = await session.execute(stmt)
 
