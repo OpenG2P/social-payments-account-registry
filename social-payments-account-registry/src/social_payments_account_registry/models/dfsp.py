@@ -10,7 +10,7 @@ class DfspLevelResponse(BaseModel):
     name: str
     code: str
     level: int
-    next_level: Optional["DfspLevelResponse"] = None
+    next_level_id: Optional[int] = None
     validation_regex: Optional[str] = None
 
 
@@ -20,8 +20,8 @@ class DfspLevelValueResponse(BaseModel):
     id: int
     name: str
     code: str
-    level: Optional[DfspLevelResponse] = None
-    next_level: Optional[DfspLevelResponse] = None
+    level_id: Optional[int] = None
+    next_level_id: Optional[int] = None
 
 
 class DfspLevelValuesHttpResponse(BaseModel):

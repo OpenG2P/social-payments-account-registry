@@ -163,9 +163,7 @@ class SelfServiceController(BaseController):
             for strategy in strategies:
                 res = self.construct_service.deconstruct(response.fa, strategy.strategy)
                 if res:
-                    response.fa = [
-                        KeyValuePair(key=key, value=value) for key, value in res.items()
-                    ]
+                    response.fa = res
                     break
             if isinstance(response.fa, str):
                 raise BaseAppException(

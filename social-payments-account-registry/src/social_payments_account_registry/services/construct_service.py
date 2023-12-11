@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import List
 
 import parse
 from openg2p_fastapi_common.service import BaseService
@@ -17,11 +17,11 @@ class ConstructService(BaseService):
             **{key_value.key: key_value.value for key_value in values}
         )
 
-    def deconstruct(self, value: str, strategy: str) -> Dict:
+    def deconstruct(self, value: str, strategy: str) -> List[KeyValuePair]:
         parse_res = parse.parse(strategy, value)
         if parse_res:
-            return parse_res.named
-        return None
+            return [KeyValuePair(key=k, value=v) for k, v in parse_res.named.items()]
+        return []
 
     async def id_construct(self, id_values: List[KeyValuePair], id_provider_id: int):
         id_provider: IdProvider = await IdProvider.get_by_id(id_provider_id)
