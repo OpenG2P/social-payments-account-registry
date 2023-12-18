@@ -30,7 +30,7 @@ class MojaloopOracleService(BaseService):
         if type not in _config.type_fa_prefix_map:
             # Make this compliant to Mojaloop
             raise BaseMojaloopException(
-                "ML-REQ-100",
+                "ML-SPR-100",
                 "Given type is not supported by this oracle.",
                 http_status_code=400,
             )
@@ -56,14 +56,14 @@ class MojaloopOracleService(BaseService):
                 response = res.fa
         except Exception as e:
             raise BaseMojaloopException(
-                "ML-REQ-200",
+                "ML-SPR-200",
                 "Given Type and ID combination is invalid or not found in this oracle.",
                 http_status_code=400,
             ) from e
 
         if not response:
             raise BaseMojaloopException(
-                "ML-REQ-200",
+                "ML-SPR-200",
                 "Given Type and ID combination is invalid or not found in this oracle.",
                 http_status_code=400,
             )
@@ -82,7 +82,7 @@ class MojaloopOracleService(BaseService):
 
         if not dfsp_id:
             raise BaseMojaloopException(
-                "ML-REQ-300",
+                "ML-SPR-300",
                 "FinancialAddress response is not recognisable by this oracle or by Mojaloop.",
                 http_status_code=400,
             )
