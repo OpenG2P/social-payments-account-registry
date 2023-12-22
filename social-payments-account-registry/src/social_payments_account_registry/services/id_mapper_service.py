@@ -15,13 +15,17 @@ class IdMapperService(BaseService):
     async def get_fa_request(self, id: str) -> GetTxnStatus:
         raise NotImplementedError()
 
-    async def get_fa_request_status(self, txn_id: str) -> UpdateTxnStatus:
+    async def get_fa_request_status(self, txn_id: str) -> GetTxnStatus:
         raise NotImplementedError()
 
-    async def update_fa_request(self, id: str, fa: str) -> GetTxnStatus:
+    async def update_fa_request(
+        self, id: str, fa: str, link: bool = False
+    ) -> UpdateTxnStatus:
         raise NotImplementedError()
 
-    async def update_fa_request_status(self, txn_id: str) -> UpdateTxnStatus:
+    async def update_fa_request_status(
+        self, txn_id: str, link: bool = False
+    ) -> UpdateTxnStatus:
         raise NotImplementedError()
 
     async def construct_and_get_fa_request(
@@ -38,6 +42,7 @@ class IdMapperService(BaseService):
         fa_values: List[KeyValuePair],
         id_provider_id: int,
         dfsp_provider_id: int,
+        link: bool = False,
     ) -> UpdateTxnStatus:
         id_constructed = await self.construct_service.id_construct(
             id_values, id_provider_id
@@ -45,4 +50,4 @@ class IdMapperService(BaseService):
         fa_constructed = await self.construct_service.fa_construct(
             fa_values, dfsp_provider_id
         )
-        return await self.update_fa_request(id_constructed, fa_constructed)
+        return await self.update_fa_request(id_constructed, fa_constructed, link=link)

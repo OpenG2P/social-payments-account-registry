@@ -20,4 +20,16 @@ class ALSOracleController(BaseController):
         )
 
     async def get_participants(self, type: str, id: str):
+        """
+        Mojaloop Get Participants API - Synchronous.
+        - This is also Mojaloop ALS Oracle API. Making SPAR into Mojaloop Oracle.
+        - This API can be used to return DFSP ID if the FA value is given. Example
+          - If FA is "account_no:12345@abc.bank1", then this will return "bank1"
+            if bank1 is the selected DFSP.
+
+        Errors:
+        - Code: ML-SPR-100. HTTP: 400. Message: Given type is not supported by this oracle.
+        - Code: ML-SPR-200. HTTP: 400. Message: Given Type and ID combination is invalid or not found in this oracle.
+        - Code: ML-SPR-300. HTTP: 400. Message: FinancialAddress response is not recognisable by this oracle or by Mojaloop.
+        """
         return await self.als_oracle.get_participants(type, id)

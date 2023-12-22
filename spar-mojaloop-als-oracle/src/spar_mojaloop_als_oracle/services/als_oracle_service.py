@@ -30,7 +30,7 @@ class MojaloopOracleService(BaseService):
         if type not in _config.type_fa_prefix_map:
             # Make this compliant to Mojaloop
             raise BaseMojaloopException(
-                "ML-REQ-100",
+                "ML-SPR-100",
                 "Given type is not supported by this oracle.",
                 http_status_code=400,
             )
@@ -42,26 +42,28 @@ class MojaloopOracleService(BaseService):
         # seaching through the FAs using the resolve API.
         # This is possible in Sunbird's G2P ID Mapper because of a limitation
         try:
-            res = await self.mapper_resolve_service.resolve_request_sync(
+            res = await self.mapper_resolve_service.resolve_request(
                 [
                     MapperValue(
                         fa=f"{fa_prefix}{id}",
                     ),
                 ],
+                loop_sleep=0,
+                max_retries=100,
             )
             res = list(res.refs.values())[0]
             if res.status == RequestStatusEnum.succ:
                 response = res.fa
         except Exception as e:
             raise BaseMojaloopException(
-                "ML-REQ-200",
+                "ML-SPR-200",
                 "Given Type and ID combination is invalid or not found in this oracle.",
                 http_status_code=400,
             ) from e
 
         if not response:
             raise BaseMojaloopException(
-                "ML-REQ-200",
+                "ML-SPR-200",
                 "Given Type and ID combination is invalid or not found in this oracle.",
                 http_status_code=400,
             )
@@ -74,13 +76,13 @@ class MojaloopOracleService(BaseService):
                 dfsp_prov.strategy_id
             )
             res = self.construct_service.deconstruct(response, strategy.strategy)
-            if res and dfsp_prov.code in res.values():
+            if res and dfsp_prov.code in [i.value for i in res]:
                 dfsp_id = dfsp_prov.code
                 break
 
         if not dfsp_id:
             raise BaseMojaloopException(
-                "ML-REQ-300",
+                "ML-SPR-300",
                 "FinancialAddress response is not recognisable by this oracle or by Mojaloop.",
                 http_status_code=400,
             )

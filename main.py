@@ -11,8 +11,6 @@ from openg2p_common_g2pconnect_id_mapper.app import (
 from openg2p_fastapi_auth.app import Initializer as AuthInitializer
 from openg2p_fastapi_common.ping import PingInitializer
 
-# from spar_mapper_g2p_connect.app import Initializer as SparG2PConnectMapperInitializer
-
 main_init = SparInitializer()
 AuthInitializer()
 G2pConnectMapperInitializer()
