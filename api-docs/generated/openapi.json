@@ -14,13 +14,14 @@
     "version": "0.1.0"
   },
   "paths": {
-    "/dfsp/getLevel/{id}": {
+    "/dfsp/getLevels": {
       "get": {
         "tags": [
           "dfsp"
         ],
         "summary": "Get Dfsp Level",
-        "operationId": "get_dfsp_level_dfsp_getLevel__id__get",
+        "description": "Get Levels that can be supplied to Update FA Request. Or to be shown on UI.\n- Authentication required.\n- A combination of the query parameters can be used.",
+        "operationId": "get_dfsp_level_dfsp_getLevels_get",
         "security": [
           {
             "JwtBearerAuth": []
@@ -29,12 +30,57 @@
         "parameters": [
           {
             "name": "id",
-            "in": "path",
-            "required": true,
+            "in": "query",
+            "required": false,
             "schema": {
-              "type": "integer",
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter for levels with this ID",
               "title": "Id"
-            }
+            },
+            "description": "Filter for levels with this ID"
+          },
+          {
+            "name": "code",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter for level with this code.",
+              "title": "Code"
+            },
+            "description": "Filter for level with this code."
+          },
+          {
+            "name": "level",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter for levels with this level number",
+              "title": "Level"
+            },
+            "description": "Filter for levels with this level number"
           }
         ],
         "responses": {
@@ -43,7 +89,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DfspLevelResponse"
+                  "$ref": "#/components/schemas/DfspLevelHttpResponse"
                 }
               }
             }
@@ -101,13 +147,14 @@
         }
       }
     },
-    "/dfsp/getLevelValues/{levelId}": {
+    "/dfsp/getLevelValues": {
       "get": {
         "tags": [
           "dfsp"
         ],
         "summary": "Get Dfsp Level Values",
-        "operationId": "get_dfsp_level_values_dfsp_getLevelValues__levelId__get",
+        "description": "Get Level Values that can be supplied to each particular level in the Update FA Request.\nOr to be shown on UI.\n- Authentication required.\n- A combination of the query parameters can be used.",
+        "operationId": "get_dfsp_level_values_dfsp_getLevelValues_get",
         "security": [
           {
             "JwtBearerAuth": []
@@ -115,22 +162,76 @@
         ],
         "parameters": [
           {
-            "name": "levelId",
-            "in": "path",
-            "required": true,
+            "name": "id",
+            "in": "query",
+            "required": false,
             "schema": {
-              "type": "integer",
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter for level Values with this ID.",
+              "title": "Id"
+            },
+            "description": "Filter for level Values with this ID."
+          },
+          {
+            "name": "code",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter for level Values with this code.",
+              "title": "Code"
+            },
+            "description": "Filter for level Values with this code."
+          },
+          {
+            "name": "levelId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter for level values whose level's ID is this.",
               "title": "Levelid"
-            }
+            },
+            "description": "Filter for level values whose level's ID is this."
           },
           {
             "name": "parentId",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "integer",
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter for level values whose parent Level value's ID is this.",
               "title": "Parentid"
-            }
+            },
+            "description": "Filter for level values whose parent Level value's ID is this."
           }
         ],
         "responses": {
@@ -203,6 +304,7 @@
           "selfservice"
         ],
         "summary": "Get Fa Request",
+        "description": "Make a request to get the Financial Address(FA) of the authenticated user.\n- Will receive a txn_id, which can be used to query for status.",
         "operationId": "get_fa_request_selfservice_getFaRequest_post",
         "responses": {
           "200": {
@@ -269,6 +371,7 @@
           "selfservice"
         ],
         "summary": "Get Fa Request Status",
+        "description": "Get status of a getFaRequest against the given txn_id, along with FA if success.\n\nErrors:\n- Code: G2P-SPR-452. HTTP: 400. Message: Invalid txn_id given for get. Or the user is not allowed\n  to access the txn_id.\n- Code: G2P-SPR-453. HTTP: 400. Message: Cannot deconstruct the FA using any available strategy.",
         "operationId": "get_fa_request_status_selfservice_getFaRequestStatus__txn_id__get",
         "security": [
           {
@@ -283,6 +386,23 @@
             "schema": {
               "type": "string",
               "title": "Txn Id"
+            }
+          },
+          {
+            "name": "deconstruct",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": false,
+              "title": "Deconstruct"
             }
           }
         ],
@@ -356,16 +476,34 @@
           "selfservice"
         ],
         "summary": "Update Fa Request",
+        "description": "Make a request to update/link new FA for the authenticated user.\n- A txn_id is returned, which can be used to query for status.\n- If the user is linking their FA for the first time, the link parameter can be set.\n  To check whether their FA is already linked, users can make a getFaRequest.\n- Request Json should contain level_values array, which a key value pair list.\n- Each \"key\" should be a valid DfspLevel's code. Use /dfsp/getLevels to get valid levels list.\n- Each \"value\" should be either a valid DfspLevelValue's code value, or regular string\n  depending on the DfspLevel. Use /dfsp/getLevelValues to get valid values list.\n\nErrors:\n- Code: G2P-SPR-452. HTTP: 400. Message: Invalid value for the given\n  code. &lt;Reason&gt;. &lt;Level Code&gt;.\n\nInternal Errors:\n- Code: G2P-SPR-450. HTTP: 500. Message: Invalid configuration of id providers and login provider.\n- Code: G2P-SPR-451. HTTP: 500. Message: Invalid configuration of dfsp providers.",
         "operationId": "update_fa_request_selfservice_updateFaRequest_post",
+        "security": [
+          {
+            "JwtBearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "link",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Link"
+            }
+          }
+        ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/FaUpdateRequest"
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "200": {
@@ -379,44 +517,44 @@
             }
           },
           "401": {
-            "description": "Unauthorized",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorListResponse"
                 }
               }
-            }
+            },
+            "description": "Unauthorized"
           },
           "403": {
-            "description": "Forbidden",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorListResponse"
                 }
               }
-            }
+            },
+            "description": "Forbidden"
           },
           "404": {
-            "description": "Not Found",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorListResponse"
                 }
               }
-            }
+            },
+            "description": "Not Found"
           },
           "500": {
-            "description": "Internal Server Error",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorListResponse"
                 }
               }
-            }
+            },
+            "description": "Internal Server Error"
           },
           "422": {
             "description": "Validation Error",
@@ -428,12 +566,7 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "JwtBearerAuth": []
-          }
-        ]
+        }
       }
     },
     "/selfservice/updateFaRequestStatus/{txn_id}": {
@@ -442,6 +575,7 @@
           "selfservice"
         ],
         "summary": "Update Fa Request Status",
+        "description": "Get status of a updateFaRequest against the given txn_id.\n- If the updateFaRequest is a link request (i.e., the link param is set), then it will have to\n  be set here also. Or G2P-SPR-452 error will be thrown.\n- If the updateFaRequest is a link request even if the user has once already linked their FA,\n  the status will be rejected (rjct). Vice-versa is also rejected.\n\nErrors:\n- Code: G2P-SPR-452. HTTP: 400. Message: Invalid txn_id given for update/link. Or the user\n  is not allowed to access the txn_id.",
         "operationId": "update_fa_request_status_selfservice_updateFaRequestStatus__txn_id__get",
         "security": [
           {
@@ -456,6 +590,16 @@
             "schema": {
               "type": "string",
               "title": "Txn Id"
+            }
+          },
+          {
+            "name": "link",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Link"
             }
           }
         ],
@@ -529,6 +673,7 @@
           "auth"
         ],
         "summary": "Get Profile",
+        "description": "Get Profile Data of the authenticated user/entity.\nThis can also be used to check whether or not the Authentication is present and valid.\n- Authentication required.\n- If online is true, the server will try to userinfo from original Authorization Server.\n  Else it will return the information present in ID Token and Access token.",
         "operationId": "get_profile_auth_profile_get",
         "security": [
           {
@@ -617,6 +762,7 @@
           "auth"
         ],
         "summary": "Logout",
+        "description": "Perform Logout. This clears the Access Tokens and ID Tokens from cookies.\n- Authentication not mandatory.",
         "operationId": "logout_auth_logout_post",
         "responses": {
           "200": {
@@ -676,6 +822,7 @@
           "auth"
         ],
         "summary": "Get Login Providers",
+        "description": "Get available Login Providers List. Can also be used to display login providers on UI.\nUse getLoginProviderRedirect API to redirect to this Login Provider to perform login.",
         "operationId": "get_login_providers_auth_getLoginProviders_get",
         "responses": {
           "200": {
@@ -737,6 +884,7 @@
           "auth"
         ],
         "summary": "Get Login Provider Redirect",
+        "description": "Redirect URL to redirect to the Login Provider's Authorization URL\nbased on the id of login provider given.",
         "operationId": "get_login_provider_redirect_auth_getLoginProviderRedirect__id__get",
         "parameters": [
           {
@@ -827,6 +975,7 @@
           "oauth"
         ],
         "summary": "Oauth Callback",
+        "description": "Oauth2 Redirect Url. Auth Server will redirect to this URL after the Authentication is successful.\n\nInternal Errors:\n- Code: G2P-AUT-401. HTTP: 401. Message: Login Provider Id not received.",
         "operationId": "oauth_callback_oauth2_callback_get",
         "responses": {
           "200": {
@@ -886,6 +1035,7 @@
           "callback"
         ],
         "summary": "Mapper On Link",
+        "description": "The API that ID Mapper calls back when a ID Mapper Link Request is made.\n- Returns positive ACK (acc to G2P Connect Spec) if the txn_id is known.\n  Return negative ACK otherwise.",
         "operationId": "mapper_on_link_internal_callback_mapper_on_link_post",
         "requestBody": {
           "content": {
@@ -967,6 +1117,7 @@
           "callback"
         ],
         "summary": "Mapper On Update",
+        "description": "The API that ID Mapper calls back when a ID Mapper Update Request is made.\n- Returns positive ACK (acc to G2P Connect Spec) if the txn_id is known.\n  Return negative ACK otherwise.",
         "operationId": "mapper_on_update_internal_callback_mapper_on_update_post",
         "requestBody": {
           "content": {
@@ -1048,6 +1199,7 @@
           "callback"
         ],
         "summary": "Mapper On Resolve",
+        "description": "The API that ID Mapper calls back when a ID Mapper Resolve Request is made.\n- Returns positive ACK (acc to G2P Connect Spec) if the txn_id is known.\n  Return negative ACK otherwise.",
         "operationId": "mapper_on_resolve_internal_callback_mapper_on_resolve_post",
         "requestBody": {
           "content": {
@@ -1129,6 +1281,7 @@
           "mojaloop-als-oracle"
         ],
         "summary": "Get Participants",
+        "description": "Mojaloop Get Participants API - Synchronous.\n- This is also Mojaloop ALS Oracle API. Making SPAR into Mojaloop Oracle.\n- This API can be used to return DFSP ID if the FA value is given. Example\n  - If FA is \"account_no:12345@abc.bank1\", then this will return \"bank1\"\n    if bank1 is the selected DFSP.\n\nErrors:\n- Code: ML-SPR-100. HTTP: 400. Message: Given type is not supported by this oracle.\n- Code: ML-SPR-200. HTTP: 400. Message: Given Type and ID combination is invalid or not found in this oracle.\n- Code: ML-SPR-300. HTTP: 400. Message: FinancialAddress response is not recognisable by this oracle or by Mojaloop.",
         "operationId": "get_participants_internal_mojaloop_participants__type___id__get",
         "parameters": [
           {
@@ -1220,6 +1373,7 @@
           "ping"
         ],
         "summary": "Get Ping",
+        "description": "Returns \"pong\" always, if the service is healthy.\nThis can also used for service health checks.",
         "operationId": "get_ping_ping_get",
         "responses": {
           "200": {
@@ -1536,6 +1690,22 @@
         ],
         "title": "CommonResponseMessage"
       },
+      "DfspLevelHttpResponse": {
+        "properties": {
+          "levels": {
+            "items": {
+              "$ref": "#/components/schemas/DfspLevelResponse"
+            },
+            "type": "array",
+            "title": "Levels"
+          }
+        },
+        "type": "object",
+        "required": [
+          "levels"
+        ],
+        "title": "DfspLevelHttpResponse"
+      },
       "DfspLevelResponse": {
         "properties": {
           "id": {
@@ -1553,6 +1723,28 @@
           "level": {
             "type": "integer",
             "title": "Level"
+          },
+          "next_level_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Level Id"
+          },
+          "validation_regex": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Validation Regex"
           }
         },
         "type": "object",
@@ -1578,25 +1770,27 @@
             "type": "string",
             "title": "Code"
           },
-          "level": {
+          "level_id": {
             "anyOf": [
               {
-                "$ref": "#/components/schemas/DfspLevelResponse"
+                "type": "integer"
               },
               {
                 "type": "null"
               }
-            ]
+            ],
+            "title": "Level Id"
           },
-          "next_level": {
+          "next_level_id": {
             "anyOf": [
               {
-                "$ref": "#/components/schemas/DfspLevelResponse"
+                "type": "integer"
               },
               {
                 "type": "null"
               }
-            ]
+            ],
+            "title": "Next Level Id"
           }
         },
         "type": "object",
@@ -1685,6 +1879,12 @@
             "anyOf": [
               {
                 "type": "string"
+              },
+              {
+                "items": {
+                  "$ref": "#/components/schemas/KeyValuePair"
+                },
+                "type": "array"
               },
               {
                 "type": "null"
