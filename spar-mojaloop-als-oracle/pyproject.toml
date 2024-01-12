@@ -4,7 +4,6 @@ build-backend = "hatchling.build"
 
 [project]
 name = "spar-mojaloop-als-oracle"
-version = "0.1.0"
 authors = [
   { name="OpenG2P", email="info@openg2p.org" },
 ]
@@ -16,13 +15,17 @@ classifiers = [
   "License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)",
   "Operating System :: OS Independent",
 ]
-dependencies=[
+dependencies = [
   "social-payments-account-registry",
   "openg2p-common-g2pconnect-id-mapper",
 ]
+dynamic = ["version"]
 
 [project.urls]
 Homepage = "https://openg2p.org"
 Documentation = "https://docs.openg2p.org/"
 Repository = "https://github.com/OpenG2P/social-payments-account-registry"
 Source = "https://github.com/OpenG2P/social-payments-account-registry"
+
+[tool.hatch.version]
+path = "src/spar_mojaloop_als_oracle/__init__.py"

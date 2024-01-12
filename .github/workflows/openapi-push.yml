@@ -23,7 +23,7 @@ jobs:
           python -m pip install git+https://github.com/openg2p/openg2p-fastapi-common.git@develop\#egg=openg2p-fastapi-auth\&subdirectory=openg2p-fastapi-auth
           python -m pip install git+https://github.com/openg2p/openg2p-fastapi-common.git@develop\#egg=openg2p-common-g2pconnect-id-mapper\&subdirectory=openg2p-common-g2pconnect-id-mapper
           python -m pip install ./social-payments-account-registry
-          python -m pip install ./spar-mapper-g2p-connect
+          python -m pip install ./spar-connector-g2pconnect
           python -m pip install ./spar-mojaloop-als-oracle
       - name: Generate openapi json
         run: |
