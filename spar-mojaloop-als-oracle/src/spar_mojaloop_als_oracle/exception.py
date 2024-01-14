@@ -4,10 +4,12 @@ from fastapi.responses import ORJSONResponse
 from openg2p_fastapi_common.component import BaseComponent
 from openg2p_fastapi_common.context import app_registry
 
+from .config import Settings
 from .errors import BaseMojaloopException
 from .models.error import ErrorInformation, ErrorInformationResponse
 
-_logger = logging.getLogger(__name__)
+_config = Settings.get_config()
+_logger = logging.getLogger(_config.logging_default_logger_name)
 
 
 class ExceptionHandler(BaseComponent):

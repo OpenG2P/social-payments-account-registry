@@ -25,6 +25,7 @@ jobs:
           python -m pip install ./social-payments-account-registry
           python -m pip install ./spar-connector-g2pconnect
           python -m pip install ./spar-mojaloop-als-oracle
+          python -m pip install ./spar-g2pconnect-id-mapper
       - name: Generate openapi json
         run: |
           mkdir -p api-docs/generated
@@ -33,19 +34,40 @@ jobs:
             export OPENAPI_CHANGED="true"
             echo OPENAPI_CHANGED=$OPENAPI_CHANGED >> $GITHUB_ENV
           fi
+      - name: Generate mapper openapi json
+        run: |
+          cd spar-g2pconnect-id-mapper
+          mkdir -p api-docs/generated
+          python3 main.py getOpenAPI api-docs/generated/openapi.json
+          if ! [ -z "$(git status --porcelain=v1 2>/dev/null -- api-docs/generated/openapi.json)" ]; then
+          export MAPPER_OPENAPI_CHANGED="true"
+          echo MAPPER_OPENAPI_CHANGED=$MAPPER_OPENAPI_CHANGED >> $GITHUB_ENV
+          fi
       - name: Commit Changes
         uses: EndBug/add-and-commit@v7
-        if: env.OPENAPI_CHANGED == 'true'
+        if: ${{ (env.OPENAPI_CHANGED == 'true') || (env.MAPPER_OPENAPI_CHANGED == 'true') }}
         with:
           default_author: github_actions
           message: "Generated new openapi.json on push to ${{ github.event.inputs.git-ref }}"
-          add: "api-docs/generated/openapi.json"
+          add: "api-docs/generated/openapi.json spar-g2pconnect-id-mapper/api-docs/generated/openapi.json"
       - name: Setup nodejs
         uses: actions/setup-node@v2
-        if: env.OPENAPI_CHANGED == 'true'
+        if: ${{ (env.OPENAPI_CHANGED == 'true') || (env.MAPPER_OPENAPI_CHANGED == 'true') }}
         with:
           node-version: '14'
       - name: Publish to stoplight
         if: env.OPENAPI_CHANGED == 'true'
         run: |
-          npx @stoplight/cli@5 push --ci-token ${{ secrets.STOPLIGHT_PROJECT_TOKEN }} --url https://openg2p.stoplight.io --branch ${{ env.BRANCH_NAME }} --directory api-docs/generated
+          npx @stoplight/cli@5 push \
+            --ci-token ${{ secrets.STOPLIGHT_PROJECT_TOKEN }} \
+            --url https://openg2p.stoplight.io \
+            --branch ${{ env.BRANCH_NAME }} \
+            --directory api-docs/generated
+      - name: Publish mapper apis to stoplight
+        if: env.MAPPER_OPENAPI_CHANGED == 'true'
+        run: |
+          npx @stoplight/cli@5 push \
+            --ci-token ${{ secrets.STOPLIGHT_PROJECT_TOKEN }} \
+            --url https://openg2p.stoplight.io \
+            --branch ${{ env.BRANCH_NAME }} \
+            --directory spar-g2pconnect-id-mapper/api-docs/generated
