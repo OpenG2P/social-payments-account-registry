@@ -57,3 +57,13 @@ CREATE SEQUENCE login_providers_id_seq
     CACHE 1;
 
 ALTER SEQUENCE login_providers_id_seq OWNED BY login_providers.id;
+
+CREATE SEQUENCE id_fa_mappings_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+ALTER SEQUENCE id_fa_mappings_id_seq OWNED BY id_fa_mappings.id;

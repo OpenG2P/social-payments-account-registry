@@ -16,6 +16,9 @@ ALTER TABLE ONLY id_providers
 ALTER TABLE ONLY login_providers
     ADD CONSTRAINT login_providers_pkey PRIMARY KEY (id);
 
+ALTER TABLE ONLY id_fa_mappings
+    ADD CONSTRAINT id_fa_mappings_pkey PRIMARY KEY (id);
+
 ALTER TABLE ONLY dfsp_level_values
     ADD CONSTRAINT dfsp_level_values_dfsp_provider_id_fkey FOREIGN KEY (dfsp_provider_id) REFERENCES dfsp_providers(id);
 

@@ -9,3 +9,5 @@ ALTER TABLE ONLY fa_construct_strategy ALTER COLUMN id SET DEFAULT nextval('fa_c
 ALTER TABLE ONLY id_providers ALTER COLUMN id SET DEFAULT nextval('id_providers_id_seq'::regclass);
 
 ALTER TABLE ONLY login_providers ALTER COLUMN id SET DEFAULT nextval('login_providers_id_seq'::regclass);
+
+ALTER TABLE ONLY id_fa_mappings ALTER COLUMN id SET DEFAULT nextval('id_fa_mappings_id_seq'::regclass);

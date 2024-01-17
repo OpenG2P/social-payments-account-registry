@@ -66,3 +66,15 @@ CREATE TABLE dfsp_level_values (
     updated_at timestamp without time zone,
     active boolean NOT NULL
 );
+
+CREATE TABLE id_fa_mappings (
+    id integer NOT NULL,
+    name character varying,
+    id_value character varying NOT NULL,
+    fa_value character varying NOT NULL,
+    phone character varying,
+    additional_info json,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone,
+    active boolean NOT NULL
+);
