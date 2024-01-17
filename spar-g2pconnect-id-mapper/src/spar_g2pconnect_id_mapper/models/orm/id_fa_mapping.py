@@ -16,7 +16,9 @@ class IdFaMapping(BaseORMModelWithTimes):
     name: Mapped[Optional[str]] = mapped_column(String())
     phone: Mapped[Optional[str]] = mapped_column(String())
 
-    additional_info: Mapped[List[Dict[str, Any]]] = mapped_column(JSON(), default=None)
+    additional_info: Mapped[Optional[List[Dict[str, Any]]]] = mapped_column(
+        JSON(), default=None
+    )
 
     @classmethod
     async def get_all_by_query(cls, session=None, **kwargs):

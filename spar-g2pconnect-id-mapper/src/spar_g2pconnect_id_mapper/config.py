@@ -25,4 +25,5 @@ class Settings(Settings):
     db_dbname: str = "spardb"
 
     default_callback_url: Optional[AnyUrl] = None
+    default_callback_timeout: int = 10
     callback_sender_id: str = "spar.dev.openg2p.net"
