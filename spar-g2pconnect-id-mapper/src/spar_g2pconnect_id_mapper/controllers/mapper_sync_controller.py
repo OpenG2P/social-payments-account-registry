@@ -1,56 +1,59 @@
-import asyncio
 import uuid
-from datetime import datetime
 
-from openg2p_common_g2pconnect_id_mapper.models.common import (
-    Ack,
-    CommonResponse,
-    CommonResponseMessage,
+from openg2p_common_g2pconnect_id_mapper.models.link import (
+    LinkCallbackHttpRequest,
+    LinkHttpRequest,
 )
-from openg2p_common_g2pconnect_id_mapper.models.link import LinkHttpRequest
-from openg2p_common_g2pconnect_id_mapper.models.resolve import ResolveHttpRequest
-from openg2p_common_g2pconnect_id_mapper.models.update import UpdateHttpRequest
+from openg2p_common_g2pconnect_id_mapper.models.resolve import (
+    ResolveCallbackHttpRequest,
+    ResolveHttpRequest,
+)
+from openg2p_common_g2pconnect_id_mapper.models.update import (
+    UpdateCallbackHttpRequest,
+    UpdateHttpRequest,
+)
 from openg2p_fastapi_common.controller import BaseController
 from openg2p_fastapi_common.errors import BaseAppException
 
 from ..services.mapper_service import MapperService
 
 
-class MapperController(BaseController):
+class MapperSyncController(BaseController):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
         self.mapper_service = MapperService.get_component()
 
-        self.router.prefix += "/mapper"
-        self.router.tags += ["mapper-async"]
+        self.router.prefix += "/mapper/sync"
+        self.router.tags += ["mapper-sync"]
 
         self.router.add_api_route(
             "/link",
-            self.link,
-            responses={200: {"model": CommonResponseMessage}},
+            self.link_sync,
+            responses={200: {"model": LinkCallbackHttpRequest}},
             methods=["POST"],
         )
         self.router.add_api_route(
             "/update",
-            self.update,
-            responses={200: {"model": CommonResponseMessage}},
+            self.update_sync,
+            responses={200: {"model": UpdateCallbackHttpRequest}},
             methods=["POST"],
         )
         self.router.add_api_route(
             "/resolve",
-            self.resolve,
-            responses={200: {"model": CommonResponseMessage}},
+            self.resolve_sync,
+            responses={200: {"model": ResolveCallbackHttpRequest}},
             methods=["POST"],
         )
         self.router.add_api_route(
             "/unlink",
-            self.unlink,
-            responses={200: {"model": CommonResponseMessage}},
+            self.unlink_sync,
+            # TODO
+            responses={200: {"model": ResolveCallbackHttpRequest}},
             methods=["POST"],
         )
 
-    async def link(self, request: LinkHttpRequest):
+    async def link_sync(self, request: LinkHttpRequest):
         if request.header.action != "link":
             raise BaseAppException(
                 code="MPR-REQ-400",
@@ -61,17 +64,12 @@ class MapperController(BaseController):
         # TODO: For now returning random correlation id.
         correlation_id = str(uuid.uuid4())
         # TODO: For now creating async task and forgetting
-        asyncio.create_task(self.mapper_service.link(correlation_id, request))
 
-        return CommonResponseMessage(
-            message=CommonResponse(
-                ack_status=Ack.ACK,
-                correlation_id=correlation_id,
-                timestamp=datetime.utcnow(),
-            )
+        return await self.mapper_service.link(
+            correlation_id, request, make_callback=False
         )
 
-    async def update(self, request: UpdateHttpRequest):
+    async def update_sync(self, request: UpdateHttpRequest):
         if request.header.action != "update":
             raise BaseAppException(
                 code="MPR-REQ-400",
@@ -81,17 +79,11 @@ class MapperController(BaseController):
         # TODO: For now returning random correlation id.
         correlation_id = str(uuid.uuid4())
         # TODO: For now creating async task and forgetting
-        asyncio.create_task(self.mapper_service.update(correlation_id, request))
-
-        return CommonResponseMessage(
-            message=CommonResponse(
-                ack_status=Ack.ACK,
-                correlation_id=correlation_id,
-                timestamp=datetime.utcnow(),
-            )
+        return await self.mapper_service.update(
+            correlation_id, request, make_callback=False
         )
 
-    async def resolve(self, request: ResolveHttpRequest):
+    async def resolve_sync(self, request: ResolveHttpRequest):
         if request.header.action != "resolve":
             raise BaseAppException(
                 code="MPR-REQ-400",
@@ -101,15 +93,9 @@ class MapperController(BaseController):
         # TODO: For now returning random correlation id.
         correlation_id = str(uuid.uuid4())
         # TODO: For now creating async task and forgetting
-        asyncio.create_task(self.mapper_service.resolve(correlation_id, request))
-
-        return CommonResponseMessage(
-            message=CommonResponse(
-                ack_status=Ack.ACK,
-                correlation_id=correlation_id,
-                timestamp=datetime.utcnow(),
-            )
+        return await self.mapper_service.resolve(
+            correlation_id, request, make_callback=False
         )
 
-    async def unlink(self):
+    async def unlink_sync(self):
         raise NotImplementedError()

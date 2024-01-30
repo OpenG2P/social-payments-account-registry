@@ -48,7 +48,9 @@ _logger = logging.getLogger(_config.logging_default_logger_name)
 
 
 class MapperService(BaseService):
-    async def link(self, correlation_id: str, request: LinkHttpRequest):
+    async def link(
+        self, correlation_id: str, request: LinkHttpRequest, make_callback=True
+    ):
         total_request_count = len(request.message.link_request)
         total_count = 0
         failure_count = 0
@@ -112,7 +114,7 @@ class MapperService(BaseService):
                         )
                         failure_count += 1
                     else:
-                        raise
+                        raise e
 
                 total_count += 1
                 response.message.link_response.append(single_response)
@@ -125,11 +127,15 @@ class MapperService(BaseService):
             response.header.status_reason_message = (
                 "All requests in transaction failed."
             )
-        self.make_callback(
-            response, url=request.header.sender_uri, url_suffix="/on-link"
-        )
+        if make_callback:
+            return self.make_callback(
+                response, url=request.header.sender_uri, url_suffix="/on-link"
+            )
+        return response
 
-    async def update(self, correlation_id: str, request: UpdateHttpRequest):
+    async def update(
+        self, correlation_id: str, request: UpdateHttpRequest, make_callback=True
+    ):
         total_request_count = len(request.message.update_request)
         total_count = 0
         failure_count = 0
@@ -213,11 +219,15 @@ class MapperService(BaseService):
             response.header.status_reason_message = (
                 "All requests in transaction failed."
             )
-        self.make_callback(
-            response, url=request.header.sender_uri, url_suffix="/on-update"
-        )
+        if make_callback:
+            self.make_callback(
+                response, url=request.header.sender_uri, url_suffix="/on-update"
+            )
+        return response
 
-    async def resolve(self, correlation_id: str, request: ResolveHttpRequest):
+    async def resolve(
+        self, correlation_id: str, request: ResolveHttpRequest, make_callback=True
+    ):
         total_request_count = len(request.message.resolve_request)
         total_count = 0
         failure_count = 0
@@ -253,21 +263,19 @@ class MapperService(BaseService):
                 )
 
                 stmt = None
+                id_query = IdFaMapping.id_value == each_req.id
+                fa_query = IdFaMapping.fa_value == each_req.fa
+                if each_req.id and each_req.id.endswith("@") and ":" in each_req.id:
+                    id_query = IdFaMapping.id_value.like(f"%{each_req.id}%")
+                if each_req.fa and each_req.fa.endswith("@") and ":" in each_req.fa:
+                    fa_query = IdFaMapping.fa_value.like(f"%{each_req.fa}%")
+
                 if each_req.id and each_req.fa:
-                    stmt = select(IdFaMapping).where(
-                        and_(
-                            IdFaMapping.id_value == each_req.id,
-                            IdFaMapping.fa_value == each_req.fa,
-                        )
-                    )
+                    stmt = select(IdFaMapping).where(and_(id_query, fa_query))
                 elif each_req.id:
-                    stmt = select(IdFaMapping).where(
-                        IdFaMapping.id_value == each_req.id
-                    )
+                    stmt = select(IdFaMapping).where(id_query)
                 elif each_req.fa:
-                    stmt = select(IdFaMapping).where(
-                        IdFaMapping.fa_value == each_req.fa
-                    )
+                    stmt = select(IdFaMapping).where(fa_query)
                 else:
                     single_response.status = RequestStatusEnum.rjct
                     single_response.status_reason_code = (
@@ -340,9 +348,11 @@ class MapperService(BaseService):
             response.header.status_reason_message = (
                 "All requests in transaction failed."
             )
-        self.make_callback(
-            response, url=request.header.sender_uri, url_suffix="/on-resolve"
-        )
+        if make_callback:
+            self.make_callback(
+                response, url=request.header.sender_uri, url_suffix="/on-resolve"
+            )
+        return response
 
     def make_callback(self, response: BaseModel, url=None, url_suffix=None):
         _logger.info("Make Callback Response json: %s", response.model_dump_json())

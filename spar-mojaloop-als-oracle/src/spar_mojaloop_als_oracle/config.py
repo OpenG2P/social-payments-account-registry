@@ -10,3 +10,4 @@ class Settings(Settings):
     )
 
     type_fa_prefix_map: Dict = {"ACCOUNT_ID": "account:"}
+    type_fa_suffix_map: Dict = {"ACCOUNT_ID": "@"}
