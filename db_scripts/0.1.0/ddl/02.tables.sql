@@ -31,7 +31,7 @@ CREATE TABLE id_providers (
 CREATE TABLE login_providers (
     id integer NOT NULL,
     name character varying NOT NULL,
-    type public.loginprovidertypes NOT NULL,
+    type loginprovidertypes NOT NULL,
     description character varying,
     login_button_text character varying,
     login_button_image_url character varying,
