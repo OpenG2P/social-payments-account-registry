@@ -1483,9 +1483,9 @@
       },
       "AdditionalInfo": {
         "properties": {
-          "key": {
+          "name": {
             "type": "string",
-            "title": "Key"
+            "title": "Name"
           },
           "value": {
             "anyOf": [
@@ -1510,7 +1510,7 @@
         },
         "type": "object",
         "required": [
-          "key",
+          "name",
           "value"
         ],
         "title": "AdditionalInfo"
@@ -1875,6 +1875,17 @@
             "type": "string",
             "title": "Status"
           },
+          "status_reason_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Status Reason Code"
+          },
           "fa": {
             "anyOf": [
               {
@@ -2158,15 +2169,20 @@
           },
           "is_encrypted": {
             "type": "boolean",
-            "title": "Is Encrypted"
+            "title": "Is Encrypted",
+            "default": false
+          },
+          "meta": {
+            "type": "object",
+            "title": "Meta",
+            "default": {}
           }
         },
         "type": "object",
         "required": [
           "message_id",
           "message_ts",
-          "action",
-          "is_encrypted"
+          "action"
         ],
         "title": "MsgCallbackHeader"
       },
@@ -2307,6 +2323,28 @@
             "format": "date-time",
             "title": "Timestamp"
           },
+          "additional_info": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/AdditionalInfo"
+                },
+                "type": "array"
+              },
+              {
+                "$ref": "#/components/schemas/AdditionalInfo"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Additional Info"
+          },
+          "locale": {
+            "type": "string",
+            "title": "Locale",
+            "default": "eng"
+          },
           "fa": {
             "type": "string",
             "title": "Fa"
@@ -2335,21 +2373,6 @@
             ],
             "title": "Status Reason Message",
             "default": ""
-          },
-          "additional_info": {
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/AdditionalInfo"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "locale": {
-            "type": "string",
-            "title": "Locale",
-            "default": "eng"
           }
         },
         "type": "object",
@@ -2372,6 +2395,28 @@
             "format": "date-time",
             "title": "Timestamp"
           },
+          "additional_info": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/AdditionalInfo"
+                },
+                "type": "array"
+              },
+              {
+                "$ref": "#/components/schemas/AdditionalInfo"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Additional Info"
+          },
+          "locale": {
+            "type": "string",
+            "title": "Locale",
+            "default": "eng"
+          },
           "fa": {
             "anyOf": [
               {
@@ -2381,8 +2426,7 @@
                 "type": "null"
               }
             ],
-            "title": "Fa",
-            "default": ""
+            "title": "Fa"
           },
           "id": {
             "anyOf": [
@@ -2393,8 +2437,7 @@
                 "type": "null"
               }
             ],
-            "title": "Id",
-            "default": ""
+            "title": "Id"
           },
           "account_provider_info": {
             "anyOf": [
@@ -2430,21 +2473,6 @@
             ],
             "title": "Status Reason Message",
             "default": ""
-          },
-          "additional_info": {
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/AdditionalInfo"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "locale": {
-            "type": "string",
-            "title": "Locale",
-            "default": "eng"
           }
         },
         "type": "object",
@@ -2465,6 +2493,28 @@
             "type": "string",
             "format": "date-time",
             "title": "Timestamp"
+          },
+          "additional_info": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/AdditionalInfo"
+                },
+                "type": "array"
+              },
+              {
+                "$ref": "#/components/schemas/AdditionalInfo"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Additional Info"
+          },
+          "locale": {
+            "type": "string",
+            "title": "Locale",
+            "default": "eng"
           },
           "id": {
             "anyOf": [
@@ -2502,21 +2552,6 @@
             ],
             "title": "Status Reason Message",
             "default": ""
-          },
-          "additional_info": {
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/AdditionalInfo"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "locale": {
-            "type": "string",
-            "title": "Locale",
-            "default": "eng"
           }
         },
         "type": "object",
@@ -2587,7 +2622,8 @@
           "rjct.reference_id.invalid",
           "rjct.reference_id.duplicate",
           "rjct.timestamp.invalid",
-          "rjct.beneficiary_name.invalid"
+          "rjct.beneficiary_name.invalid",
+          "rjct.id.invalid"
         ],
         "title": "UpdateRequestStatusReasonCode"
       },
@@ -2600,6 +2636,17 @@
           "status": {
             "type": "string",
             "title": "Status"
+          },
+          "status_reason_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Status Reason Code"
           }
         },
         "type": "object",
