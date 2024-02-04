@@ -18,7 +18,7 @@ from .services.construct_service import ConstructService
 
 class Initializer(Initializer):
     def initialize(self, **kwargs):
-        super().initialize()
+        super().initialize(**kwargs)
         # Initialize all Services, Controllers, any utils here.
         ConstructService()
         DfspController().post_init()

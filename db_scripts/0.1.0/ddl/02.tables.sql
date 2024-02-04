@@ -31,7 +31,7 @@ CREATE TABLE id_providers (
 CREATE TABLE login_providers (
     id integer NOT NULL,
     name character varying NOT NULL,
-    type public.loginprovidertypes NOT NULL,
+    type loginprovidertypes NOT NULL,
     description character varying,
     login_button_text character varying,
     login_button_image_url character varying,
@@ -62,6 +62,18 @@ CREATE TABLE dfsp_level_values (
     level_id integer NOT NULL,
     next_level_id integer,
     dfsp_provider_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone,
+    active boolean NOT NULL
+);
+
+CREATE TABLE id_fa_mappings (
+    id integer NOT NULL,
+    name character varying,
+    id_value character varying NOT NULL,
+    fa_value character varying NOT NULL,
+    phone character varying,
+    additional_info json,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone,
     active boolean NOT NULL

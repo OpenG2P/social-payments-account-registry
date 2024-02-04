@@ -3,7 +3,6 @@ import redis.asyncio as redis_asyncio
 from openg2p_common_g2pconnect_id_mapper.context import queue_redis_async_pool
 from openg2p_common_g2pconnect_id_mapper.models.common import (
     MapperValue,
-    RequestStatusEnum,
     SingleTxnRefStatus,
     TxnStatus,
 )
@@ -60,7 +59,9 @@ class G2PConnectIdMapperService(IdMapperService):
         single_res: SingleTxnRefStatus = list(res.refs.values())[0]
         single_res_status = single_res.status.value if single_res.status else ""
         single_res_out = GetTxnStatus(txn_id=txn_id, status=single_res_status)
-        if single_res.status == RequestStatusEnum.succ:
+        if single_res.status_reason_code:
+            single_res_out.status_reason_code = single_res.status_reason_code
+        if single_res.fa:
             single_res_out.fa = single_res.fa
         return single_res_out
 
@@ -113,4 +114,6 @@ class G2PConnectIdMapperService(IdMapperService):
         single_res: SingleTxnRefStatus = list(res.refs.values())[0]
         single_res_status = single_res.status.value if single_res.status else ""
         single_res_out = UpdateTxnStatus(txn_id=txn_id, status=single_res_status)
+        if single_res.status_reason_code:
+            single_res_out.status_reason_code = single_res.status_reason_code
         return single_res_out

@@ -23,11 +23,11 @@ jobs:
         packages-dir: social-payments-account-registry/dist
         password: ${{ secrets.PYPI_API_TOKEN }}
     - name: Build distribution SPAR G2P Connect Backend
-      run: python -m build spar-mapper-g2p-connect
+      run: python -m build spar-connector-g2pconnect
     - name: Publish SPAR G2P Connect Backend
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
-        packages-dir: spar-mapper-g2p-connect/dist
+        packages-dir: spar-connector-g2pconnect/dist
         password: ${{ secrets.PYPI_API_TOKEN }}
     - name: Build distribution SPAR Mojaloop ALS Oracle
       run: python -m build spar-mojaloop-als-oracle
@@ -35,4 +35,11 @@ jobs:
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
         packages-dir: spar-mojaloop-als-oracle/dist
+        password: ${{ secrets.PYPI_API_TOKEN }}
+    - name: Build distribution SPAR G2PConnect Mapper
+      run: python -m build spar-g2pconnect-id-mapper
+    - name: Publish SPAR G2PConnect Mapper
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        packages-dir: spar-g2pconnect-id-mapper/dist
         password: ${{ secrets.PYPI_API_TOKEN }}

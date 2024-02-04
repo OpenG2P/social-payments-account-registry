@@ -7,7 +7,7 @@ from pydantic_settings import SettingsConfigDict
 
 class Settings(G2PConnectMapperSettings, Settings):
     model_config = SettingsConfigDict(
-        env_prefix="spar_g2p_connect_", env_file=".env", extra="allow"
+        env_prefix="spar_connector_g2pconnect_", env_file=".env", extra="allow"
     )
 
     callback_api_common_prefix: str = "/internal/callback"

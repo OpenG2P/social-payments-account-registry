@@ -11,6 +11,7 @@ jobs:
     env:
       NAMESPACE: ${{ secrets.docker_hub_organisation }}
       SERVICE_NAME: social-payments-account-registry
+      MAPPER_SERVICE_NAME: spar-g2pconnect-id-mapper
     steps:
       - uses: actions/checkout@v3
       - name: Docker build and push
@@ -38,3 +39,16 @@ jobs:
             --tag $IMAGE_ID:$VERSION
 
           docker push $IMAGE_ID:$VERSION
+
+          MAPPER_IMAGE_ID=$NAMESPACE/$MAPPER_SERVICE_NAME
+
+          # Change all uppercase to lowercase
+          MAPPER_IMAGE_ID=$(echo $MAPPER_IMAGE_ID | tr '[A-Z]' '[a-z]')
+          echo MAPPER_IMAGE_ID=$MAPPER_IMAGE_ID
+          echo VERSION=$VERSION
+
+          docker build . \
+            --file spar-g2pconnect-id-mapper/Dockerfile \
+            --tag $MAPPER_IMAGE_ID:$VERSION
+
+          docker push $MAPPER_IMAGE_ID:$VERSION

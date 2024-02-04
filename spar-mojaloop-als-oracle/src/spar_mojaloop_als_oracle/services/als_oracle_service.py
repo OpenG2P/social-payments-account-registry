@@ -35,7 +35,8 @@ class MojaloopOracleService(BaseService):
                 http_status_code=400,
             )
 
-        fa_prefix = _config.type_fa_prefix_map[type]
+        fa_prefix = _config.type_fa_prefix_map.get(type, "")
+        fa_suffix = _config.type_fa_suffix_map.get(type, "")
 
         response = None
         # The Following is only possible if the ID Mapper allows
@@ -45,7 +46,7 @@ class MojaloopOracleService(BaseService):
             res = await self.mapper_resolve_service.resolve_request(
                 [
                     MapperValue(
-                        fa=f"{fa_prefix}{id}",
+                        fa=f"{fa_prefix}{id}{fa_suffix}",
                     ),
                 ],
                 loop_sleep=0,

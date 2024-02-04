@@ -3,11 +3,11 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "spar-mojaloop-als-oracle"
+name = "spar-g2pconnect-id-mapper"
 authors = [
   { name="OpenG2P", email="info@openg2p.org" },
 ]
-description = "SPAR: Mojaloop Oracle API Impl"
+description = "SPAR G2P Connect ID Mapper"
 readme = "README.md"
 requires-python = ">=3.7"
 classifiers = [
@@ -16,7 +16,7 @@ classifiers = [
   "Operating System :: OS Independent",
 ]
 dependencies = [
-  "social-payments-account-registry",
+  "openg2p-fastapi-common",
   "openg2p-common-g2pconnect-id-mapper",
 ]
 dynamic = ["version"]
@@ -28,4 +28,4 @@ Repository = "https://github.com/OpenG2P/social-payments-account-registry"
 Source = "https://github.com/OpenG2P/social-payments-account-registry"
 
 [tool.hatch.version]
-path = "src/spar_mojaloop_als_oracle/__init__.py"
+path = "src/spar_g2pconnect_id_mapper/__init__.py"
