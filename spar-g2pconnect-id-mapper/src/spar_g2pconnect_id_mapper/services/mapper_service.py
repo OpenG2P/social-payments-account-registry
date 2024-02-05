@@ -195,7 +195,7 @@ class MapperService(BaseService):
                                 ] = info.model_dump()
                             else:
                                 addl_info_copy.append(info.model_dump())
-                    result.additional_info = addl_info_copy
+                        result.additional_info = addl_info_copy
 
                     await session.commit()
                 else:
