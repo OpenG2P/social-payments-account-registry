@@ -113,6 +113,7 @@ class MapperService(BaseService):
                             "Duplicate ID exists. Use 'update' instead."
                         )
                         failure_count += 1
+                        await session.rollback()
                     else:
                         raise e
 
