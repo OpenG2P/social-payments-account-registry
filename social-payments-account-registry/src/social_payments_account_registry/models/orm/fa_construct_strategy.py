@@ -7,3 +7,4 @@ class FaConstructStrategy(BaseORMModelWithTimes):
     __tablename__ = "fa_construct_strategy"
 
     strategy: Mapped[str] = mapped_column(String())
+    deconstruct_strategy: Mapped[str] = mapped_column(String())

@@ -1,6 +1,7 @@
 CREATE TABLE fa_construct_strategy (
     id integer NOT NULL,
     strategy character varying NOT NULL,
+    deconstruct_strategy character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone,
     active boolean NOT NULL
