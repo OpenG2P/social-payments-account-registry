@@ -147,6 +147,7 @@ class SelfServiceController(BaseController):
         txn_id: str,
         auth: Annotated[AuthCredentials, Depends(JwtBearerAuth())],
         deconstruct: Optional[bool] = False,
+        deconstructCodes: Optional[bool] = True,
     ):
         """
         Get status of a getFaRequest against the given txn_id, along with FA if success.
@@ -161,7 +162,11 @@ class SelfServiceController(BaseController):
         if deconstruct and response and response.fa:
             strategies: List[FaConstructStrategy] = await FaConstructStrategy.get_all()
             for strategy in strategies:
-                res = self.construct_service.deconstruct(response.fa, strategy.strategy)
+                res = self.construct_service.deconstruct(
+                    response.fa, strategy.deconstruct_strategy
+                )
+                if deconstructCodes:
+                    res = await self.construct_service.render_code_with_values(res)
                 if res:
                     response.fa = res
                     break

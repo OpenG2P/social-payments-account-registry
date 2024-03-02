@@ -3,6 +3,7 @@
 [![Build Status](https://github.com/OpenG2P/social-payments-account-registry/actions/workflows/test.yml/badge.svg?branch=develop)](https://github.com/OpenG2P/social-payments-account-registry/actions/workflows/test.yml?query=branch%3Adevelop)
 [![codecov](https://codecov.io/gh/OpenG2P/social-payments-account-registry/branch/develop/graph/badge.svg)](https://codecov.io/gh/OpenG2P/social-payments-account-registry)
 [![openapi](https://img.shields.io/badge/open--API-swagger-brightgreen)](https://validator.swagger.io/?url=https://raw.githubusercontent.com/OpenG2P/social-payments-account-registry/develop/api-docs/generated/openapi.json)
+[![mapper-openapi](https://img.shields.io/badge/mapper%20open--API-swagger-brightgreen)](https://validator.swagger.io/?url=https://raw.githubusercontent.com/OpenG2P/social-payments-account-registry/develop/api-docs/generated/mapper-openapi.json)
 
 This module implements the Account ID Mapper functionality while providing a self service portal for users to provide their bank account information linked to their ID. See more details here.
 
