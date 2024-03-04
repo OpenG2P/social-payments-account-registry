@@ -76,7 +76,9 @@ class MojaloopOracleService(BaseService):
             strategy: FaConstructStrategy = await FaConstructStrategy.get_by_id(
                 dfsp_prov.strategy_id
             )
-            res = self.construct_service.deconstruct(response, strategy.strategy)
+            res = self.construct_service.deconstruct(
+                response, strategy.deconstruct_strategy
+            )
             if res and dfsp_prov.code in [i.value for i in res]:
                 dfsp_id = dfsp_prov.code
                 break
